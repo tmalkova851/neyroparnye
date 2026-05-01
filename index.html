@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>НЕЙРОПАРНИ — ИИ-контент, который продаёт</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #141414;
+      color: #fff;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 48px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, transparent 100%);
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: #e50914;
+      text-transform: uppercase;
+    }
+
+    .contacts {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .contact-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      transition: background 0.2s, transform 0.2s;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .contact-icon:hover {
+      background: rgba(229,9,20,0.3);
+      transform: scale(1.1);
+    }
+
+    .contact-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* HERO */
+    .hero {
+      padding: 160px 48px 80px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 72px);
+      font-weight: 900;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 span { color: #e50914; }
+
+    .hero p {
+      font-size: clamp(16px, 2vw, 22px);
+      color: #aaa;
+      letter-spacing: 1px;
+    }
+
+    /* VIDEO GRID */
+    .grid-section {
+      padding: 40px 48px 80px;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .video-card {
+      position: relative;
+      cursor: pointer;
+      transform: perspective(800px) rotateY(-8deg) rotateX(4deg) scale(0.97);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: -8px 12px 40px rgba(0,0,0,0.7);
+      background: #1a1a1a;
+      aspect-ratio: 16/9;
+    }
+
+    .video-card:hover {
+      transform: perspective(800px) rotateY(0deg) rotateX(0deg) scale(1.02);
+      box-shadow: 0 20px 60px rgba(229,9,20,0.3);
+    }
+
+    .video-card video,
+    .video-card .placeholder {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+      height: 100%;
+    }
+
+    .placeholder-icon {
+      opacity: 0.2;
+    }
+
+    .play-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0);
+      transition: background 0.3s;
+    }
+
+    .video-card:hover .play-overlay {
+      background: rgba(0,0,0,0.4);
+    }
+
+    .play-btn {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: rgba(229,9,20,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .video-card:hover .play-btn {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0,0,0,0.92);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.active { display: flex; }
+
+    .modal-inner {
+      position: relative;
+      width: 90vw;
+      max-width: 1100px;
+      aspect-ratio: 16/9;
+    }
+
+    .modal-inner video {
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+      background: #000;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: -44px;
+      right: 0;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 32px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+
+    .modal-close:hover { opacity: 1; }
+
+    @media (max-width: 768px) {
+      header { padding: 16px 20px; }
+      .hero { padding: 120px 20px 40px; }
+      .grid-section { padding: 20px 20px 60px; }
+      .video-grid { grid-template-columns: 1fr; gap: 24px; }
+      .video-card { transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Нейропарни</div>
+    <div class="contacts">
+      <!-- Telegram -->
+      <a class="contact-icon" href="https://t.me/d_malkov" target="_blank" title="Telegram">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.93 6.79l-1.68 7.93c-.12.56-.46.7-.93.43l-2.57-1.89-1.24 1.19c-.14.14-.25.25-.51.25l.18-2.6 4.72-4.27c.2-.18-.05-.28-.32-.1L8.12 14.4l-2.52-.79c-.55-.17-.56-.55.11-.81l9.84-3.8c.46-.17.86.11.71.79h-.01z" fill="#2AABEE"/>
+        </svg>
+      </a>
+      <!-- MAX -->
+      <a class="contact-icon" href="https://max.ru/+79092566969" target="_blank" title="MAX Messenger">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <rect width="24" height="24" rx="6" fill="#0077FF"/>
+          <text x="12" y="17" text-anchor="middle" font-size="11" font-weight="900" font-family="Arial" fill="#fff">MAX</text>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Нейро<span>парни</span></h1>
+    <p>ИИ-контент, который продаёт</p>
+  </section>
+
+  <section class="grid-section">
+    <div class="video-grid" id="videoGrid"></div>
+  </section>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-inner">
+      <button class="modal-close" id="modalClose">✕</button>
+      <video id="modalVideo" controls></video>
+    </div>
+  </div>
+
+  <script>
+    const videos = [
+      'videos/video1.mp4',
+      'videos/video2.mp4',
+      'videos/video3.mp4',
+      'videos/video4.mp4',
+      'videos/video5.mp4',
+      'videos/video6.mp4',
+      'videos/video7.mp4',
+      'videos/video8.mp4',
+      'videos/video9.mp4',
+    ];
+
+    const grid = document.getElementById('videoGrid');
+
+    videos.forEach((src, i) => {
+      const card = document.createElement('div');
+      card.className = 'video-card';
+      card.innerHTML = `
+        <div class="placeholder">
+          <svg class="placeholder-icon" width="64" height="64" viewBox="0 0 24 24" fill="white">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </div>
+        <div class="play-overlay">
+          <div class="play-btn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+      `;
+      card.addEventListener('click', () => openModal(src));
+      grid.appendChild(card);
+    });
+
+    const modal = document.getElementById('modal');
+    const modalVideo = document.getElementById('modalVideo');
+    const modalClose = document.getElementById('modalClose');
+
+    function openModal(src) {
+      modalVideo.src = src;
+      modal.classList.add('active');
+      modalVideo.play();
+    }
+
+    function closeModal() {
+      modal.classList.remove('active');
+      modalVideo.pause();
+      modalVideo.src = '';
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+
+</body>
+</html>
