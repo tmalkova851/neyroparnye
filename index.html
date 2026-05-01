@@ -273,34 +273,14 @@
     videos.forEach((src, i) => {
       const card = document.createElement('div');
       card.className = 'video-card';
-
-      const canvas = document.createElement('canvas');
-      canvas.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
-
-      const overlay = document.createElement('div');
-      overlay.className = 'play-overlay';
-      overlay.innerHTML = `<div class="play-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>`;
-
-      card.appendChild(canvas);
-      card.appendChild(overlay);
+      card.innerHTML = `
+        <img src="thumbs/thumb${i+1}.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
+        <div class="play-overlay">
+          <div class="play-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+      `;
       card.addEventListener('click', () => openModal(src));
       grid.appendChild(card);
-
-      // Захватываем первый кадр видео через скрытый video-элемент
-      const v = document.createElement('video');
-      v.src = src;
-      v.crossOrigin = 'anonymous';
-      v.preload = 'metadata';
-      v.muted = true;
-      v.playsInline = true;
-
-      v.addEventListener('loadedmetadata', () => { v.currentTime = 1; });
-      v.addEventListener('seeked', () => {
-        canvas.width = v.videoWidth;
-        canvas.height = v.videoHeight;
-        canvas.getContext('2d').drawImage(v, 0, 0);
-        v.src = '';
-      });
     });
 
     const modal = document.getElementById('modal');
