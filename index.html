@@ -92,23 +92,33 @@
     }
 
     .strip-wrapper {
-      transform: perspective(1400px) rotateX(12deg) rotateY(-4deg);
+      transform: perspective(1400px) rotateX(12deg) rotateY(-6deg);
       transform-origin: center top;
-      padding: 20px 0 40px;
+      padding: 20px 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
     .strip {
       display: flex;
       gap: 10px;
       width: max-content;
-      animation: slide 40s linear infinite;
     }
+
+    .strip-1 { animation: slide-left 40s linear infinite; }
+    .strip-2 { animation: slide-right 44s linear infinite; }
 
     .strip:hover { animation-play-state: paused; }
 
-    @keyframes slide {
+    @keyframes slide-left {
       0%   { transform: translateX(0); }
       100% { transform: translateX(-50%); }
+    }
+
+    @keyframes slide-right {
+      0%   { transform: translateX(-50%); }
+      100% { transform: translateX(0); }
     }
 
     .video-card {
@@ -234,7 +244,8 @@
 
   <section class="strip-section">
     <div class="strip-wrapper">
-      <div class="strip" id="strip"></div>
+      <div class="strip strip-1" id="strip1"></div>
+      <div class="strip strip-2" id="strip2"></div>
     </div>
   </section>
 
@@ -259,7 +270,8 @@
       'videos/video10.mp4',
     ];
 
-    const strip = document.getElementById('strip');
+    const strip1 = document.getElementById('strip1');
+    const strip2 = document.getElementById('strip2');
 
     function makeCard(src, i) {
       const card = document.createElement('div');
@@ -276,9 +288,14 @@
       return card;
     }
 
-    // Заполняем ленту + дублируем для бесшовной прокрутки
-    videos.forEach((src, i) => strip.appendChild(makeCard(src, i)));
-    videos.forEach((src, i) => strip.appendChild(makeCard(src, i)));
+    // Ряд 1: все видео, дублируем для бесшовной прокрутки
+    videos.forEach((src, i) => strip1.appendChild(makeCard(src, i)));
+    videos.forEach((src, i) => strip1.appendChild(makeCard(src, i)));
+
+    // Ряд 2: те же видео в обратном порядке
+    const reversed = [...videos].reverse();
+    reversed.forEach((src, i) => strip2.appendChild(makeCard(src, videos.length - 1 - i)));
+    reversed.forEach((src, i) => strip2.appendChild(makeCard(src, videos.length - 1 - i)));
 
     const modal = document.getElementById('modal');
     const modalVideo = document.getElementById('modalVideo');
