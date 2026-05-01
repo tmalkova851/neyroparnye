@@ -101,7 +101,7 @@
     .strip-section {
       padding: 0 0 32px;
       overflow: hidden;
-      transform: perspective(2000px) rotateX(14deg) skewX(-8deg);
+      transform: perspective(2000px) rotateX(14deg);
       transform-origin: center top;
     }
 
@@ -118,8 +118,8 @@
       width: max-content;
     }
 
-    .strip-1 { animation: slide-left 40s linear infinite; }
-    .strip-2 { animation: slide-right 44s linear infinite; }
+    .strip-1 { animation: slide-left 40s linear infinite; transform: skewX(-10deg); }
+    .strip-2 { animation: slide-right 44s linear infinite; transform: skewX(10deg); }
 
     .strip:hover { animation-play-state: paused; }
 
