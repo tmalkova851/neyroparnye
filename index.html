@@ -311,7 +311,7 @@
   <div class="modal" id="modal">
     <div class="modal-inner">
       <button class="modal-close" id="modalClose">✕</button>
-      <video id="modalVideo" controls></video>
+      <video id="modalVideo" playsinline></video>
     </div>
   </div>
 
@@ -371,6 +371,11 @@
       modalVideo.pause();
       modalVideo.src = '';
     }
+
+    modalVideo.addEventListener('click', () => {
+      if (modalVideo.paused) modalVideo.play();
+      else modalVideo.pause();
+    });
 
     modalClose.addEventListener('click', closeModal);
     modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
