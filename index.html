@@ -13,7 +13,7 @@
       color: #fff;
       font-family: 'Raleway', sans-serif;
       min-height: 100vh;
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
     /* HEADER */
@@ -100,9 +100,7 @@
     /* STRIP SECTION */
     .strip-section {
       padding: 0 0 55px;
-      overflow: visible;
-      mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+      overflow: hidden;
     }
 
     .strip-wrapper {
@@ -110,14 +108,8 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-    }
-
-    .strip-view-1 {
-      transform: perspective(700px) rotateY(-20deg);
-    }
-
-    .strip-view-2 {
-      transform: perspective(700px) rotateY(-20deg);
+      transform: perspective(1400px) rotateX(12deg);
+      transform-origin: center top;
     }
 
     .strip {
@@ -311,12 +303,8 @@
 
   <section class="strip-section">
     <div class="strip-wrapper">
-      <div class="strip-view-1">
-        <div class="strip strip-1" id="strip1"></div>
-      </div>
-      <div class="strip-view-2">
-        <div class="strip strip-2" id="strip2"></div>
-      </div>
+      <div class="strip strip-1" id="strip1"></div>
+      <div class="strip strip-2" id="strip2"></div>
     </div>
   </section>
 
