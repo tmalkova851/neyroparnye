@@ -101,8 +101,6 @@
     .strip-section {
       padding: 0 0 32px;
       overflow: hidden;
-      transform: perspective(2000px) rotateX(14deg);
-      transform-origin: center top;
     }
 
     .strip-wrapper {
@@ -112,14 +110,26 @@
       gap: 10px;
     }
 
+    .strip-view-1 {
+      overflow: hidden;
+      transform: perspective(700px) rotateY(18deg);
+      transform-origin: left center;
+    }
+
+    .strip-view-2 {
+      overflow: hidden;
+      transform: perspective(700px) rotateY(-18deg);
+      transform-origin: right center;
+    }
+
     .strip {
       display: flex;
       gap: 10px;
       width: max-content;
     }
 
-    .strip-1 { animation: slide-left 40s linear infinite; transform: skewX(-10deg); }
-    .strip-2 { animation: slide-right 44s linear infinite; transform: skewX(10deg); }
+    .strip-1 { animation: slide-left 40s linear infinite; }
+    .strip-2 { animation: slide-right 44s linear infinite; }
 
     .strip:hover { animation-play-state: paused; }
 
@@ -303,8 +313,12 @@
 
   <section class="strip-section">
     <div class="strip-wrapper">
-      <div class="strip strip-1" id="strip1"></div>
-      <div class="strip strip-2" id="strip2"></div>
+      <div class="strip-view-1">
+        <div class="strip strip-1" id="strip1"></div>
+      </div>
+      <div class="strip-view-2">
+        <div class="strip strip-2" id="strip2"></div>
+      </div>
     </div>
   </section>
 
