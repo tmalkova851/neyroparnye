@@ -228,6 +228,41 @@
     }
 
     .modal-close:hover { opacity: 1; }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 8px 16px;
+      }
+
+      .contact-icon,
+      .contact-icon svg {
+        width: 34px;
+        height: 34px;
+      }
+
+      .hero {
+        margin-top: -6px;
+        margin-bottom: -8px;
+        padding: 0 16px 0;
+      }
+
+      .hero-logo {
+        max-width: 55vw;
+      }
+
+      .strip-wrapper {
+        transform: perspective(800px) rotateX(8deg) rotateY(-3deg);
+        gap: 6px;
+      }
+
+      .video-card {
+        height: 155px;
+      }
+
+      .strip-section {
+        padding: 0;
+      }
+    }
   </style>
 </head>
 <body>
