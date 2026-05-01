@@ -108,16 +108,18 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-      transform: perspective(2000px) rotateX(12deg);
-      transform-origin: center top;
+      perspective: 700px;
+      perspective-origin: 75% center;
     }
 
     .strip-view-1 {
-      clip-path: polygon(0% 0%, 100% 10%, 100% 90%, 0% 100%);
+      overflow: hidden;
+      transform: rotateY(-22deg);
     }
 
     .strip-view-2 {
-      clip-path: polygon(0% 10%, 100% 0%, 100% 100%, 0% 90%);
+      overflow: hidden;
+      transform: rotateY(22deg);
     }
 
     .strip {
