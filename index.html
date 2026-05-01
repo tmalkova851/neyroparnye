@@ -12,6 +12,7 @@
       color: #fff;
       font-family: 'Helvetica Neue', Arial, sans-serif;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
     /* HEADER */
@@ -23,7 +24,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 18px 48px;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, transparent 100%);
+      background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, transparent 100%);
     }
 
     .logo {
@@ -58,15 +59,14 @@
       transform: scale(1.1);
     }
 
-    .contact-icon svg {
-      width: 24px;
-      height: 24px;
-    }
+    .contact-icon svg { width: 24px; height: 24px; }
 
     /* HERO */
     .hero {
-      padding: 160px 48px 80px;
+      padding: 160px 48px 60px;
       text-align: center;
+      position: relative;
+      z-index: 1;
     }
 
     .hero h1 {
@@ -85,52 +85,54 @@
       letter-spacing: 1px;
     }
 
-    /* VIDEO GRID */
-    .grid-section {
-      padding: 40px 48px 80px;
+    /* STRIP SECTION */
+    .strip-section {
+      padding: 40px 0 100px;
+      overflow: hidden;
     }
 
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 32px;
+    .strip-wrapper {
+      transform: perspective(1400px) rotateX(12deg) rotateY(-4deg);
+      transform-origin: center top;
+      padding: 20px 0 40px;
+    }
+
+    .strip {
+      display: flex;
+      gap: 10px;
+      width: max-content;
+      animation: slide 40s linear infinite;
+    }
+
+    .strip:hover { animation-play-state: paused; }
+
+    @keyframes slide {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
 
     .video-card {
-      position: relative;
-      cursor: pointer;
-      transform: perspective(800px) rotateY(-8deg) rotateX(4deg) scale(0.97);
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      height: 340px;
+      flex-shrink: 0;
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: -8px 12px 40px rgba(0,0,0,0.7);
-      background: #1a1a1a;
-      aspect-ratio: 16/9;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
     }
 
     .video-card:hover {
-      transform: perspective(800px) rotateY(0deg) rotateX(0deg) scale(1.02);
-      box-shadow: 0 20px 60px rgba(229,9,20,0.3);
+      transform: scale(1.05) translateY(-6px);
+      box-shadow: 0 20px 50px rgba(229,9,20,0.35);
+      z-index: 10;
     }
 
-    .video-card video,
-    .video-card .placeholder {
-      width: 100%;
+    .video-card img {
       height: 100%;
-      object-fit: cover;
+      width: auto;
       display: block;
-    }
-
-    .placeholder {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-      height: 100%;
-    }
-
-    .placeholder-icon {
-      opacity: 0.2;
+      pointer-events: none;
     }
 
     .play-overlay {
@@ -143,20 +145,18 @@
       transition: background 0.3s;
     }
 
-    .video-card:hover .play-overlay {
-      background: rgba(0,0,0,0.4);
-    }
+    .video-card:hover .play-overlay { background: rgba(0,0,0,0.4); }
 
     .play-btn {
-      width: 60px;
-      height: 60px;
+      width: 56px;
+      height: 56px;
       border-radius: 50%;
       background: rgba(229,9,20,0.9);
       display: flex;
       align-items: center;
       justify-content: center;
       opacity: 0;
-      transform: scale(0.8);
+      transform: scale(0.7);
       transition: opacity 0.3s, transform 0.3s;
     }
 
@@ -171,7 +171,7 @@
       position: fixed;
       inset: 0;
       z-index: 1000;
-      background: rgba(0,0,0,0.92);
+      background: rgba(0,0,0,0.94);
       align-items: center;
       justify-content: center;
     }
@@ -180,21 +180,21 @@
 
     .modal-inner {
       position: relative;
-      width: 90vw;
-      max-width: 1100px;
-      aspect-ratio: 16/9;
+      max-width: 92vw;
+      max-height: 88vh;
     }
 
     .modal-inner video {
-      width: 100%;
-      height: 100%;
+      max-width: 92vw;
+      max-height: 88vh;
       border-radius: 8px;
       background: #000;
+      display: block;
     }
 
     .modal-close {
       position: absolute;
-      top: -44px;
+      top: -42px;
       right: 0;
       background: none;
       border: none;
@@ -206,14 +206,6 @@
     }
 
     .modal-close:hover { opacity: 1; }
-
-    @media (max-width: 768px) {
-      header { padding: 16px 20px; }
-      .hero { padding: 120px 20px 40px; }
-      .grid-section { padding: 20px 20px 60px; }
-      .video-grid { grid-template-columns: 1fr; gap: 24px; }
-      .video-card { transform: none; }
-    }
   </style>
 </head>
 <body>
@@ -221,13 +213,11 @@
   <header>
     <div class="logo">Нейропарни</div>
     <div class="contacts">
-      <!-- Telegram -->
       <a class="contact-icon" href="https://t.me/d_malkov" target="_blank" title="Telegram">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.93 6.79l-1.68 7.93c-.12.56-.46.7-.93.43l-2.57-1.89-1.24 1.19c-.14.14-.25.25-.51.25l.18-2.6 4.72-4.27c.2-.18-.05-.28-.32-.1L8.12 14.4l-2.52-.79c-.55-.17-.56-.55.11-.81l9.84-3.8c.46-.17.86.11.71.79h-.01z" fill="#2AABEE"/>
         </svg>
       </a>
-      <!-- MAX -->
       <a class="contact-icon" href="https://max.ru/+79092566969" target="_blank" title="MAX Messenger">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <rect width="24" height="24" rx="6" fill="#0077FF"/>
@@ -242,11 +232,12 @@
     <p>ИИ-контент, который продаёт</p>
   </section>
 
-  <section class="grid-section">
-    <div class="video-grid" id="videoGrid"></div>
+  <section class="strip-section">
+    <div class="strip-wrapper">
+      <div class="strip" id="strip"></div>
+    </div>
   </section>
 
-  <!-- Modal -->
   <div class="modal" id="modal">
     <div class="modal-inner">
       <button class="modal-close" id="modalClose">✕</button>
@@ -268,20 +259,26 @@
       'videos/video10.mp4',
     ];
 
-    const grid = document.getElementById('videoGrid');
+    const strip = document.getElementById('strip');
 
-    videos.forEach((src, i) => {
+    function makeCard(src, i) {
       const card = document.createElement('div');
       card.className = 'video-card';
       card.innerHTML = `
-        <img src="thumbs/thumb${i+1}.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
+        <img src="thumbs/thumb${i+1}.jpg" alt="">
         <div class="play-overlay">
-          <div class="play-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>
+          <div class="play-btn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+          </div>
         </div>
       `;
       card.addEventListener('click', () => openModal(src));
-      grid.appendChild(card);
-    });
+      return card;
+    }
+
+    // Заполняем ленту + дублируем для бесшовной прокрутки
+    videos.forEach((src, i) => strip.appendChild(makeCard(src, i)));
+    videos.forEach((src, i) => strip.appendChild(makeCard(src, i)));
 
     const modal = document.getElementById('modal');
     const modalVideo = document.getElementById('modalVideo');
@@ -300,13 +297,8 @@
     }
 
     modalClose.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeModal();
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeModal();
-    });
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
   </script>
 
 </body>
