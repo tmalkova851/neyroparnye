@@ -77,17 +77,14 @@
       z-index: 1;
     }
 
-    .hero h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(52px, 8vw, 110px);
-      font-weight: 300;
-      letter-spacing: 12px;
-      text-transform: uppercase;
-      margin-bottom: 20px;
-      line-height: 1;
+    .hero-logo {
+      max-width: clamp(260px, 40vw, 520px);
+      width: 100%;
+      margin-bottom: 24px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
-
-    .hero h1 span { color: #e50914; }
 
     .hero p {
       font-family: 'Raleway', sans-serif;
@@ -254,19 +251,9 @@
           </svg>
         </a>
 
-        <!-- MAX — современная иконка -->
+        <!-- MAX — настоящий логотип -->
         <a class="contact-icon" href="https://max.ru/+79092566969" target="_blank" title="MAX Messenger">
-          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="48" height="48" rx="12" fill="url(#max-grad)"/>
-            <defs>
-              <linearGradient id="max-grad" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#0077FF"/>
-                <stop offset="100%" stop-color="#0050CC"/>
-              </linearGradient>
-            </defs>
-            <text x="24" y="30" text-anchor="middle" font-size="15" font-weight="800" font-family="Arial, sans-serif" fill="white" letter-spacing="1">MAX</text>
-            <rect x="10" y="33" width="28" height="1.5" rx="1" fill="white" opacity="0.3"/>
-          </svg>
+          <img src="max-logo.png" style="width:48px;height:48px;object-fit:contain;border-radius:12px;">
         </a>
 
       </div>
@@ -274,7 +261,7 @@
   </header>
 
   <section class="hero">
-    <h1>Нейро<span>парни</span></h1>
+    <img class="hero-logo" src="logo.png" alt="Нейропарни">
     <p>Студия уникального контента</p>
   </section>
 
