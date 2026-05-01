@@ -108,16 +108,14 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-      perspective: 700px;
-      perspective-origin: 75% center;
     }
 
     .strip-view-1 {
-      transform: rotateY(-20deg);
+      transform: perspective(700px) rotateY(-20deg);
     }
 
     .strip-view-2 {
-      transform: rotateY(-20deg);
+      transform: perspective(700px) rotateY(-20deg);
     }
 
     .strip {
